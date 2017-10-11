@@ -45,7 +45,30 @@ public class FrontCompression {
          * Complete this function.
          */
 
-        return "";
+        String[] splitLine = corpus.split("\n");
+        String[] compressedLine = corpus.split("\n");
+        int lineMaxNum = splitLine.length;
+
+        compressedLine[0] = 0 + " " + splitLine[0];
+        String prev = "";
+        for (int index = 0; index < lineMaxNum; index++) {
+            int prefix = longestPrefix(prev, splitLine[index]);
+            compressedLine[index] = prefix + " "
+            + splitLine[index].substring(prefix, splitLine[index].length()) + "\n";
+            prev = splitLine[index];
+            //System.out.print(compressedLine[index]);
+        }
+
+
+        String finalLine = "";
+
+        for (int lineNum = 0; lineNum < lineMaxNum; lineNum++) {
+            finalLine = finalLine + compressedLine[lineNum];
+
+        }
+
+
+        return finalLine;
     }
 
     /**
@@ -68,7 +91,51 @@ public class FrontCompression {
          * Complete this function.
          */
 
-        return "";
+        String[] splitLine = corpus.split("\n");
+        String[] decompressedLine = corpus.split("\n");
+        int lineMaxNum = splitLine.length;
+
+        String tempLine = decompressedLine[0];
+        String[] temporary = tempLine.split(" ");
+
+        decompressedLine[0] = temporary[1];
+
+        //System.out.println(decompressedLine[0]);
+
+
+        for (int index = 1; index < lineMaxNum; index++) {
+            tempLine = decompressedLine[index];
+            //System.out.println(decompressedLine[index]);
+
+            String[] fortemporary = tempLine.split(" ");
+            //System.out.println(fortemporary[0]);
+
+            if (Integer.valueOf(fortemporary[0]) > 0) {
+                decompressedLine[index] =
+                    decompressedLine[index - 1].substring(0, Integer.valueOf(fortemporary[0]))
+                    + fortemporary[1];
+            } else {
+                decompressedLine[index] = fortemporary[1];
+            }
+
+          //System.out.println(decompressedLine[1]);
+
+
+
+
+
+        }
+
+
+        String finalLine = "";
+
+        for (int lineNum = 0; lineNum < lineMaxNum; lineNum++) {
+            finalLine = finalLine + decompressedLine[lineNum] + "\n";
+
+        }
+
+
+        return finalLine;
     }
 
     /**
@@ -82,7 +149,19 @@ public class FrontCompression {
         /*
          * Complete this function.
          */
-        return 0;
+        int prefix = 0;
+
+        int length = Math.min(firstString.length(), secondString.length());
+
+        for (int index = 0; index < length; index++) {
+            if (firstString.charAt(index) == secondString.charAt(index)) {
+                prefix++;
+            } else {
+                break;
+            }
+
+        }
+        return prefix;
     }
 
     /**
